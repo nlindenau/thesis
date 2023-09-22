@@ -16,6 +16,17 @@ def create_nutritional_label_for_ingredient(serving, nutritional_values_per_100g
 
     return nutritional_label
 
+def sum_nutritional_facts(label_a, label_b):
+    summarized_nutritional_label = {}
+
+    for nutrient_1, value_1 in label_a.items():
+            value_2 = label_b[nutrient_1]
+            sum_of_nutrient_values = value_1 + value_2
+            rounded_sum_of_nutrient_values = round(sum_of_nutrient_values, 2)
+            summarized_nutritional_label.update({nutrient_1: rounded_sum_of_nutrient_values})
+
+    return summarized_nutritional_label
+
 def display_nutritional_label(nutritional_label):
     for nutrient in nutritional_label:
         print(nutrient, nutritional_label[nutrient])

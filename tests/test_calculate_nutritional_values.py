@@ -1,5 +1,5 @@
-from src.calculate_nutritional_values import get_nutritional_value, create_nutritional_label_for_ingredient
-from src.example_values import APPLE_NUTRITIONAL_FACTS_PER_100G
+from src.calculate_nutritional_values import get_nutritional_value, create_nutritional_label_for_ingredient, sum_nutritional_facts
+from src.example_values import APPLE_NUTRITIONAL_FACTS_PER_100G, CREAM_CHEESE_NUTRITIONAL_FACTS_PER_100G
 
 def test_get_nutritional_value():
     result = get_nutritional_value(serving=600, nutritional_value_per_100g=100)
@@ -15,3 +15,13 @@ def test_create_nutritional_label_for_ingredient():
                       'sugars': 62.4, 
                       'sodium': 6.0, 
                       'protein': 1.56}
+    
+def test_sum_nutritional_facts():
+    result = sum_nutritional_facts(APPLE_NUTRITIONAL_FACTS_PER_100G, CREAM_CHEESE_NUTRITIONAL_FACTS_PER_100G)
+    assert result == {'calories': 395.0, 
+                      'fat': 33.67, 
+                      'saturated_fat': 19.73, 
+                      'carbohydrates': 18.36, 
+                      'sugars': 14.16, 
+                      'sodium': 369.0, 
+                      'protein': 6.05}
