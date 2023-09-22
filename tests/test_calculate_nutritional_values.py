@@ -1,4 +1,4 @@
-from src.calculate_nutritional_value import get_nutritional_value, create_nutritional_label_for_ingredient
+from src.calculate_nutritional_values import get_nutritional_value, create_nutritional_label_for_ingredient
 from src.example_values import APPLE_NUTRITIONAL_FACTS_PER_100G
 
 def test_get_nutritional_value():
