@@ -1,9 +1,8 @@
 import requests
 
+#Fineli and its API are created and maintained by the Finnish Institute for Health and Welfare (THL).
+#more at: https://fineli.fi/fineli/en/index
 FINELI_API_URL = " https://fineli.fi/fineli/api/v1/foods"
-
-"""Fineli and its API are created and maintained by the Finnish Institute for Health and Welfare (THL).
-more at: https://fineli.fi/fineli/en/index """
 
 def get_data_from_fineli(ingredient, language="en"):
     '''Query Fineli API.
