@@ -1,8 +1,6 @@
-from pprint import pprint
 from thefuzz import fuzz
 from copy import deepcopy
 
-from proccess_fineli_data import print_all_food_names, get_list_of_nutrition_values
 
 def get_names_similarity_score(processed_fineli_response, original_query_word):
     '''Assign a Fuzzy Matching similarity score for all foods in a cleaned list of Fineli responses. Uses token set ratio.

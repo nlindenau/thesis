@@ -2,7 +2,6 @@ from call_fineli_api import get_data_from_fineli
 from proccess_fineli_data import get_list_of_nutrition_values
 from fuzzy_match_fineli_response import get_names_similarity_score, get_most_similar_entry
 
-import pprint
 
 def fineli_workflow(query):
     fineli_response = get_data_from_fineli(query)
