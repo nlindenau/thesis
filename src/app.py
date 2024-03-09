@@ -7,6 +7,5 @@ def main():
 
     full_meal = sum_nutrition_facts(my_apple_label, my_cheese_label)
     pretty_print_label(full_meal)
-    #print(full_meal)
 
 main()
