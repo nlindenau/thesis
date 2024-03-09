@@ -1,13 +1,15 @@
 def get_nutritional_value(serving, nutritional_value_per_100g):
-    '''Takes in size of the serving of the ingredient and 
-    a nutritional value (eg. calories) per 100 g.'''
+    '''Calculate nutritional value for a serving.'''
     nutritional_value = round(nutritional_value_per_100g * (serving / 100), 2)
     return nutritional_value
 
 def create_nutrition_facts_for_ingredient(serving, nutritional_values_per_100g):
-    '''Takes in size of the serving of the ingredient and 
-    a dictionary of nutritional facts per 100g, 
-    returns a dictionary of nutritional values for the entire serving.'''
+    '''Get nutrition facts dictionary.
+
+    Keyword arguments:
+    serving -- size of a serving in g.
+    nutritional_value_per_100g -- nutritional value per 100g.
+    '''
     nutrition_facts = {}
     for nutrient in nutritional_values_per_100g:
         nutrient_amount_per_100g = nutritional_values_per_100g[nutrient]
@@ -17,8 +19,9 @@ def create_nutrition_facts_for_ingredient(serving, nutritional_values_per_100g):
     return nutrition_facts
 
 def sum_nutrition_facts(label_a, label_b):
-    '''Takes in two nutrition facts labels, returns a summarized nutrition facts label 
-    for the entire serving.'''
+    '''Create a summarized nutrition facts label 
+    for the entire serving.
+    '''
     summarized_nutrition_facts = {}
 
     for nutrient_1, value_1 in label_a.items():
@@ -30,7 +33,7 @@ def sum_nutrition_facts(label_a, label_b):
     return summarized_nutrition_facts
 
 def pretty_print_label(nutrition_facts_label):
-    '''Pretty prints a nutrition facts label.'''
+    '''Pretty print a nutrition facts label.'''
     print("Nutrition Facts (total)")
     for nutrient in nutrition_facts_label:
         print(nutrient, nutrition_facts_label[nutrient])
