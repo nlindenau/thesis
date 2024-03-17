@@ -20,12 +20,25 @@ This project is a part of my Master's thesis at Centria UAS.
 - AWS & GCP 
 - GitHub Actions
 
-## Example request
+## Running the application locally
+
+### With Flask 
+```sh
+pip install -r requirements.txt 
+flask --app src.app run
+```
+
+The application will take your POST requests at http://127.0.0.1:5000/api/v1/nutritionfacts.
+The application also provides a hello world message at http://127.0.0.1:5000.
+
+## Example request payload
+
+### api/v1/nutritionfacts
 
 ```json
-request = [
+[
     {
-        "name": "Apple, raw",
+        "name": "Apple, average",
         "weight": 300
     },
     {
@@ -40,8 +53,10 @@ request = [
 ```
 
 When giving names of your ingredients, be the most descriptive you can. Fineli returns a long list at every query, with some entries being not at all related to the query word.
-RVAL tries to fuzzy match your original query to the results of Fineli, but this is not 100% reliable method.
 
-Suggested pattern of naming is [Item], [descriptor]. For example [Spaghetti pasta, dry] returns much more accurate results than just [pasta]. 
+RVAL tries to fuzzy match your original query to the results from Fineli, but this is not 100% reliable method. In the API response, you will get a list of Fineli entries that RVAL fuzzy matched to your original query.
+
+Suggested pattern of naming is `item`, `descriptor`. For example `Spaghetti pasta, dry` returns much more accurate results than just `pasta`. For fruit and vegetables, descriptors like `average` or `with skin` work really well.
 
 Weights should be provided in grammes.
+
