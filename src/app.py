@@ -3,7 +3,6 @@ from src.process_user_request import get_list_of_ingredients, get_ingredients_fa
 
 app = Flask(__name__)
 
-EXAMPLE_RETURN = {"message": "hello"}
 @app.route("/")
 def welcome_message():
     return "<p>Hello from RVAL.</p>"
