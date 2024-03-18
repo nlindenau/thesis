@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
+
 from src.process_user_request import get_list_of_ingredients, get_ingredients_facts_from_fineli, calculate_nutiritonal_values_for_servings, sum_nutritional_values_for_all_ingredients, create_full_response
 
 app = Flask(__name__)
@@ -27,4 +28,4 @@ def nutrition_facts_calculator():
 
     response = create_full_response(ingredients, fineli_ingredients, final_label)
 
-    return jsonify(response)
+    return response, 200

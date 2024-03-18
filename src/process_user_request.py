@@ -1,6 +1,8 @@
+from flask import jsonify
+
 from src.call_fineli_api import run_fineli_workflow
 from src.fuzzy_match_fineli_response import run_fuzzy_matching_workflow
-from copy import deepcopy
+
 
 def get_list_of_ingredients(nutrition_facts_label):
     '''Get list of ingredient names from a nutrition label.
@@ -108,10 +110,11 @@ def sum_nutritional_values_for_all_ingredients(list_with_values_per_serving):
     return(final_nutrition_facts_label)
 
 def create_full_response(list_of_ingredients, fineli_response_names, final_label):
-    response = deepcopy(final_label)
-
+    response = {}
+    response["nutrition_facts"] = final_label
     response["fineli_returned_ingredients"] = fineli_response_names
     response["original_ingredients"] = list_of_ingredients
 
-    return(response)
+    response_as_json = jsonify(response)
+    return(response_as_json)
 
