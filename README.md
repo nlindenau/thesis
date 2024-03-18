@@ -31,9 +31,9 @@ flask --app src.app run
 The application will take your POST requests at http://127.0.0.1:5000/api/v1/nutritionfacts.
 The application also provides a hello world message at http://127.0.0.1:5000.
 
-## Example request payload
+## Example request body
 
-### api/v1/nutritionfacts
+### POST api/v1/nutritionfacts
 
 ```json
 [
@@ -48,7 +48,7 @@ The application also provides a hello world message at http://127.0.0.1:5000.
     {
         "name": "Honey, raw",
         "weight": 10
-    },
+    }
 ]
 ```
 
@@ -60,3 +60,29 @@ Suggested pattern of naming is `item`, `descriptor`. For example `Spaghetti past
 
 Weights should be provided in grammes.
 
+## Example response body
+
+### 200 OK 
+```json
+{
+    "fineli_returned_ingredients": [
+        "Apple, Average, With Skin",
+        "Cream Cheese, Low-Fat, 11% Fat, Plain",
+        "Honey"
+    ],
+    "nutrition_facts": {
+        "carbohydrates": 33.22,
+        "energy": 217.76,
+        "fat": 5.76,
+        "protein": 4.25,
+        "salt": 388.87,
+        "saturated_fat": 3.83,
+        "sugars": 32.96
+    },
+    "original_ingredients": [
+        "Apple, average",
+        "Cream Cheese, low-fat",
+        "Honey, raw"
+    ]
+}
+```

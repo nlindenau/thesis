@@ -1,11 +1,9 @@
-from src.call_fineli_api import run_fineli_workflow
-from src.fuzzy_match_fineli_response import run_fuzzy_matching_workflow
-from src.calculate_nutritional_values import get_nutritional_value
-from copy import deepcopy
+from flask import jsonify
 
+from src.nutrition_facts import NutritionFactsLabel
+from src.proccess_fineli_data import run_fineli_workflow, run_fuzzy_matching_workflow
 
-
-def get_list_of_ingredients(nutrition_facts_label):
+def get_list_of_ingredients(nutrition_facts_label: NutritionFactsLabel) -> list:
     '''Get list of ingredient names from a nutrition label.
 
     Keyword arguments:
@@ -19,7 +17,7 @@ def get_list_of_ingredients(nutrition_facts_label):
 
     return ingredients_list
 
-def get_ingredients_facts_from_fineli(list_of_ingredients):
+def get_ingredients_facts_from_fineli(list_of_ingredients: list) -> list:
     '''Get nutrition facts for each ingredient by calling Fineli. The returned values are
       for the fuzzy matched ingredients from Fineli.
 
@@ -38,7 +36,12 @@ def get_ingredients_facts_from_fineli(list_of_ingredients):
 
     return final_list
 
-def calculate_nutiritonal_values_for_servings(user_request, processed_fineli_response):
+def get_nutritional_value(serving: float, nutritional_value_per_100g: float) -> float:
+    '''Calculate nutritional value for a serving.'''
+    nutritional_value = nutritional_value_per_100g * (serving / 100)
+    return nutritional_value
+
+def calculate_nutiritonal_values_for_servings(user_request: list, processed_fineli_response: NutritionFactsLabel) -> list:
     '''Get nutrition facts for a serving of each ingredient.
 
     Keyword arguments:
@@ -53,25 +56,25 @@ def calculate_nutiritonal_values_for_servings(user_request, processed_fineli_res
     for original_element, fineli_element in zip(user_request, processed_fineli_response):
             energy = get_nutritional_value(original_element["weight"], fineli_element["energy"])
             fat = get_nutritional_value(original_element["weight"], fineli_element["fat"])
-            saturated_fat = get_nutritional_value(original_element["weight"], fineli_element["saturatedFat"])
+            saturated_fat = get_nutritional_value(original_element["weight"], fineli_element["saturated_fat"])
             carbohydrates = get_nutritional_value(original_element["weight"], fineli_element["carbohydrates"])
             sugars = get_nutritional_value(original_element["weight"], fineli_element["sugars"])
             protein = get_nutritional_value(original_element["weight"], fineli_element["protein"])
             salt = get_nutritional_value(original_element["weight"], fineli_element["salt"])
-            new_element = {"name": original_element["name"],
+            new_element =  NutritionFactsLabel({"name": original_element["name"],
                            "energy": energy,
                            "fat":  fat,
                            "saturated_fat": saturated_fat,
                            "carbohydrates": carbohydrates,
                            "sugars": sugars,
                            "protein": protein,
-                           "salt": salt, 
-                           }
+                           "salt": salt
+                           })
             list_with_values_per_serving.append(new_element)
             
     return list_with_values_per_serving
         
-def sum_nutritional_values_for_all_ingredients(list_with_values_per_serving):
+def sum_nutritional_values_for_all_ingredients(list_with_values_per_serving: list) -> NutritionFactsLabel:
     '''Get nutrition facts for the entire meal.
 
     Keyword arguments:
@@ -94,22 +97,23 @@ def sum_nutritional_values_for_all_ingredients(list_with_values_per_serving):
         total_protein += element["protein"]
         total_salt += element["salt"]
 
-    final_nutrition_facts_label = {"energy": round(total_energy, 2), 
+    final_nutrition_facts_label = NutritionFactsLabel({"energy": round(total_energy, 2), 
                                    "fat": round(total_fat, 2), 
                                    "saturated_fat": round(total_saturated_fat, 2),
                                    "carbohydrates": round(total_carbohydrates, 2), 
                                    "sugars": round(total_sugars, 2), 
                                    "protein": round(total_protein, 2),
                                    "salt": round(total_salt, 2),
-                                   }
+                                   })
     
     return(final_nutrition_facts_label)
 
-def create_full_response(list_of_ingredients, fineli_response_names, final_label):
-    response = deepcopy(final_label)
-
+def create_full_response(list_of_ingredients: list, fineli_response_names: list, final_label: NutritionFactsLabel):
+    response = {}
+    response["nutrition_facts"] = final_label
     response["fineli_returned_ingredients"] = fineli_response_names
     response["original_ingredients"] = list_of_ingredients
 
-    return(response)
+    response_as_json = jsonify(response)
+    return(response_as_json)
 
