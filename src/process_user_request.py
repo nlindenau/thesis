@@ -1,4 +1,4 @@
-from flask import jsonify, Response
+from flask import jsonify
 
 from src.nutrition_facts import NutritionFactsLabel
 from src.proccess_fineli_data import run_fineli_workflow, run_fuzzy_matching_workflow
