@@ -1,7 +1,6 @@
 from flask import jsonify
 
-from src.call_fineli_api import run_fineli_workflow
-from src.proccess_fineli_data import run_fuzzy_matching_workflow
+from src.proccess_fineli_data import run_fineli_workflow, run_fuzzy_matching_workflow
 
 
 def get_list_of_ingredients(nutrition_facts_label):

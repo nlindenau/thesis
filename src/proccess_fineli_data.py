@@ -1,6 +1,8 @@
 from copy import deepcopy
 from thefuzz import fuzz
 
+from src.call_fineli_api import get_data_from_fineli
+
 def get_list_of_nutrition_values(fineli_response, language="en"):
     '''Clean up Fineli response to get only the EU-law required information for nutrition declaration per item.
 
@@ -26,6 +28,15 @@ def get_list_of_nutrition_values(fineli_response, language="en"):
     
     return (processed_response)
 
+def run_fineli_workflow(query):
+    '''Query Fineli API and clean up the response for further processing.
+
+    Keyword arguments:
+    query -- the name of the ingredient
+    '''
+    fineli_response = get_data_from_fineli(query)
+    clean_fineli_response = get_list_of_nutrition_values(fineli_response)
+    return clean_fineli_response
 
 
 def get_names_similarity_score(processed_fineli_response, original_query_word):
