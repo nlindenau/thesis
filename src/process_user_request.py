@@ -1,7 +1,9 @@
-from call_fineli_api import run_fineli_workflow
-from fuzzy_match_fineli_response import run_fuzzy_matching_workflow
-from calculate_nutritional_values import get_nutritional_value
+from src.call_fineli_api import run_fineli_workflow
+from src.fuzzy_match_fineli_response import run_fuzzy_matching_workflow
+from src.calculate_nutritional_values import get_nutritional_value
 from copy import deepcopy
+
+
 
 def get_list_of_ingredients(nutrition_facts_label):
     '''Get list of ingredient names from a nutrition label.
@@ -48,29 +50,26 @@ def calculate_nutiritonal_values_for_servings(user_request, processed_fineli_res
     '''
     list_with_values_per_serving = []
 
-    for original_element in user_request:
-        for fineli_element in processed_fineli_response:
-            if original_element["name"] == fineli_element["original_query"]:
-                energy = get_nutritional_value(original_element["weight"], fineli_element["energy"])
-                fat = get_nutritional_value(original_element["weight"], fineli_element["fat"])
-                saturated_fat = get_nutritional_value(original_element["weight"], fineli_element["saturatedFat"])
-                carbohydrates = energy = get_nutritional_value(original_element["weight"], fineli_element["carbohydrates"])
-                sugars = get_nutritional_value(original_element["weight"], fineli_element["sugars"])
-                protein = get_nutritional_value(original_element["weight"], fineli_element["protein"])
-                salt = get_nutritional_value(original_element["weight"], fineli_element["energy"])
-                new_element = {"name": original_element["name"],
-                               "energy": energy,
-                               "fat":  fat,
-                               "saturated_fat": saturated_fat,
-                               "carbohydrates": carbohydrates,
-                               "sugars": sugars,
-                               "protein": protein,
-                               "salt": salt, 
-                               }
-                list_with_values_per_serving.append(new_element)
+    for original_element, fineli_element in zip(user_request, processed_fineli_response):
+            energy = get_nutritional_value(original_element["weight"], fineli_element["energy"])
+            fat = get_nutritional_value(original_element["weight"], fineli_element["fat"])
+            saturated_fat = get_nutritional_value(original_element["weight"], fineli_element["saturatedFat"])
+            carbohydrates = get_nutritional_value(original_element["weight"], fineli_element["carbohydrates"])
+            sugars = get_nutritional_value(original_element["weight"], fineli_element["sugars"])
+            protein = get_nutritional_value(original_element["weight"], fineli_element["protein"])
+            salt = get_nutritional_value(original_element["weight"], fineli_element["salt"])
+            new_element = {"name": original_element["name"],
+                           "energy": energy,
+                           "fat":  fat,
+                           "saturated_fat": saturated_fat,
+                           "carbohydrates": carbohydrates,
+                           "sugars": sugars,
+                           "protein": protein,
+                           "salt": salt, 
+                           }
+            list_with_values_per_serving.append(new_element)
             
-            print(list_with_values_per_serving)
-            return list_with_values_per_serving
+    return list_with_values_per_serving
         
 def sum_nutritional_values_for_all_ingredients(list_with_values_per_serving):
     '''Get nutrition facts for the entire meal.
@@ -112,6 +111,5 @@ def create_full_response(list_of_ingredients, fineli_response_names, final_label
     response["fineli_returned_ingredients"] = fineli_response_names
     response["original_ingredients"] = list_of_ingredients
 
-    print(response)
     return(response)
 

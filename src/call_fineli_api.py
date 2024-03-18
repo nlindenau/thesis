@@ -1,5 +1,5 @@
 import requests
-from proccess_fineli_data import get_list_of_nutrition_values
+from src.proccess_fineli_data import get_list_of_nutrition_values
 
 #Fineli and its API are created and maintained by the Finnish Institute for Health and Welfare (THL).
 #more at: https://fineli.fi/fineli/en/index
