@@ -1,5 +1,5 @@
 from src.calculate_nutritional_values import get_nutritional_value, create_nutrition_facts_for_ingredient, sum_nutrition_facts
-from src.example_values import APPLE_NUTRITIONAL_FACTS_PER_100G, CREAM_CHEESE_NUTRITIONAL_FACTS_PER_100G
+from example_values import APPLE_NUTRITIONAL_FACTS_PER_100G, CREAM_CHEESE_NUTRITIONAL_FACTS_PER_100G
 
 def test_get_nutritional_value():
     result = get_nutritional_value(serving=600, nutritional_value_per_100g=100)
