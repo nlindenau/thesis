@@ -15,7 +15,7 @@ def get_list_of_nutrition_values(fineli_response: list) -> NutritionFactsLabel:
 
     for element in fineli_response:
         #Create a shortened version of an entry from fineli response
-        new_item: NutritionFactsLabel = {
+        new_item= NutritionFactsLabel({
             #en is hardcoded language code for english
             "name": element["name"]["en"],        
             "energy": element["energyKcal"],
@@ -25,7 +25,8 @@ def get_list_of_nutrition_values(fineli_response: list) -> NutritionFactsLabel:
             "sugars": element["sugar"],
             "protein": element["protein"],
             "salt": element["salt"]
-        }
+        })
+        
         processed_response.append(new_item) 
     
     return (processed_response)

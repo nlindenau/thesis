@@ -61,15 +61,15 @@ def calculate_nutiritonal_values_for_servings(user_request: list, processed_fine
             sugars = get_nutritional_value(original_element["weight"], fineli_element["sugars"])
             protein = get_nutritional_value(original_element["weight"], fineli_element["protein"])
             salt = get_nutritional_value(original_element["weight"], fineli_element["salt"])
-            new_element : NutritionFactsLabel = {"name": original_element["name"],
+            new_element =  NutritionFactsLabel({"name": original_element["name"],
                            "energy": energy,
                            "fat":  fat,
                            "saturated_fat": saturated_fat,
                            "carbohydrates": carbohydrates,
                            "sugars": sugars,
                            "protein": protein,
-                           "salt": salt, 
-                           }
+                           "salt": salt
+                           })
             list_with_values_per_serving.append(new_element)
             
     return list_with_values_per_serving
@@ -97,14 +97,14 @@ def sum_nutritional_values_for_all_ingredients(list_with_values_per_serving: lis
         total_protein += element["protein"]
         total_salt += element["salt"]
 
-    final_nutrition_facts_label : NutritionFactsLabel = {"energy": round(total_energy, 2), 
+    final_nutrition_facts_label = NutritionFactsLabel({"energy": round(total_energy, 2), 
                                    "fat": round(total_fat, 2), 
                                    "saturated_fat": round(total_saturated_fat, 2),
                                    "carbohydrates": round(total_carbohydrates, 2), 
                                    "sugars": round(total_sugars, 2), 
                                    "protein": round(total_protein, 2),
                                    "salt": round(total_salt, 2),
-                                   }
+                                   })
     
     return(final_nutrition_facts_label)
 
