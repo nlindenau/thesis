@@ -1,9 +1,9 @@
-from flask import jsonify
+from flask import jsonify, Response
 
 from src.nutrition_facts import NutritionFactsLabel
 from src.proccess_fineli_data import run_fineli_workflow, run_fuzzy_matching_workflow
 
-def get_list_of_ingredients(nutrition_facts_label):
+def get_list_of_ingredients(nutrition_facts_label: NutritionFactsLabel) -> list:
     '''Get list of ingredient names from a nutrition label.
 
     Keyword arguments:
@@ -17,7 +17,7 @@ def get_list_of_ingredients(nutrition_facts_label):
 
     return ingredients_list
 
-def get_ingredients_facts_from_fineli(list_of_ingredients):
+def get_ingredients_facts_from_fineli(list_of_ingredients: list) -> list:
     '''Get nutrition facts for each ingredient by calling Fineli. The returned values are
       for the fuzzy matched ingredients from Fineli.
 
@@ -36,12 +36,12 @@ def get_ingredients_facts_from_fineli(list_of_ingredients):
 
     return final_list
 
-def get_nutritional_value(serving, nutritional_value_per_100g):
+def get_nutritional_value(serving: float, nutritional_value_per_100g: float) -> float:
     '''Calculate nutritional value for a serving.'''
     nutritional_value = nutritional_value_per_100g * (serving / 100)
     return nutritional_value
 
-def calculate_nutiritonal_values_for_servings(user_request, processed_fineli_response):
+def calculate_nutiritonal_values_for_servings(user_request: list, processed_fineli_response: NutritionFactsLabel) -> list:
     '''Get nutrition facts for a serving of each ingredient.
 
     Keyword arguments:
@@ -74,7 +74,7 @@ def calculate_nutiritonal_values_for_servings(user_request, processed_fineli_res
             
     return list_with_values_per_serving
         
-def sum_nutritional_values_for_all_ingredients(list_with_values_per_serving):
+def sum_nutritional_values_for_all_ingredients(list_with_values_per_serving: list) -> NutritionFactsLabel:
     '''Get nutrition facts for the entire meal.
 
     Keyword arguments:
@@ -108,7 +108,7 @@ def sum_nutritional_values_for_all_ingredients(list_with_values_per_serving):
     
     return(final_nutrition_facts_label)
 
-def create_full_response(list_of_ingredients, fineli_response_names, final_label):
+def create_full_response(list_of_ingredients: list, fineli_response_names: list, final_label: NutritionFactsLabel) -> Response:
     response = {}
     response["nutrition_facts"] = final_label
     response["fineli_returned_ingredients"] = fineli_response_names

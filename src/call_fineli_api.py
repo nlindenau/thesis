@@ -4,16 +4,15 @@ import requests
 #more at: https://fineli.fi/fineli/en/index
 FINELI_API_URL = " https://fineli.fi/fineli/api/v1/foods"
 
-def get_data_from_fineli(ingredient, language="en"):
+def get_data_from_fineli(ingredient: str) -> list:
     '''Query Fineli API.
 
     Keyword arguments:
     ingredient -- the name of ingredient 
-    language -- search language (default en)
     '''
     query_params = {
         "q": ingredient,
-        "lang": language,
+        "lang": "en",
     }
     # sending request without User-Agent results in 403 Forbidden response
     headers = {
