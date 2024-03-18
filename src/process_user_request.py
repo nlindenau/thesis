@@ -1,9 +1,6 @@
 from src.call_fineli_api import run_fineli_workflow
 from src.fuzzy_match_fineli_response import run_fuzzy_matching_workflow
-from src.calculate_nutritional_values import get_nutritional_value
 from copy import deepcopy
-
-
 
 def get_list_of_ingredients(nutrition_facts_label):
     '''Get list of ingredient names from a nutrition label.
@@ -37,6 +34,11 @@ def get_ingredients_facts_from_fineli(list_of_ingredients):
         final_list.append(most_similar_response)
 
     return final_list
+
+def get_nutritional_value(serving, nutritional_value_per_100g):
+    '''Calculate nutritional value for a serving.'''
+    nutritional_value = nutritional_value_per_100g * (serving / 100)
+    return nutritional_value
 
 def calculate_nutiritonal_values_for_servings(user_request, processed_fineli_response):
     '''Get nutrition facts for a serving of each ingredient.
