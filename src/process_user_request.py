@@ -108,7 +108,7 @@ def sum_nutritional_values_for_all_ingredients(list_with_values_per_serving: lis
     
     return(final_nutrition_facts_label)
 
-def create_full_response(list_of_ingredients: list, fineli_response_names: list, final_label: NutritionFactsLabel) -> Response:
+def create_full_response(list_of_ingredients: list, fineli_response_names: list, final_label: NutritionFactsLabel):
     response = {}
     response["nutrition_facts"] = final_label
     response["fineli_returned_ingredients"] = fineli_response_names
