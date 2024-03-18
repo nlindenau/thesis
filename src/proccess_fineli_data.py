@@ -1,7 +1,6 @@
 from copy import deepcopy
 from thefuzz import fuzz
 
-
 def get_list_of_nutrition_values(fineli_response, language="en"):
     '''Clean up Fineli response to get only the EU-law required information for nutrition declaration per item.
 
