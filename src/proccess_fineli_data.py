@@ -2,6 +2,7 @@ from copy import deepcopy
 from thefuzz import fuzz
 
 from src.call_fineli_api import get_data_from_fineli
+from src.nutrition_facts import NutritionFactsLabel
 
 def get_list_of_nutrition_values(fineli_response, language="en"):
     '''Clean up Fineli response to get only the EU-law required information for nutrition declaration per item.
@@ -14,11 +15,11 @@ def get_list_of_nutrition_values(fineli_response, language="en"):
 
     for element in fineli_response:
         #Create a shortened version of an entry from fineli response
-        new_item = {
+        new_item: NutritionFactsLabel = {
             "name": element["name"][language],        
             "energy": element["energyKcal"],
             "fat": element["fat"],
-            "saturatedFat": element["saturatedFat"],
+            "saturated_fat": element["saturatedFat"],
             "carbohydrates": element["carbohydrate"],
             "sugars": element["sugar"],
             "protein": element["protein"],

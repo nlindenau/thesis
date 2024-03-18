@@ -1,7 +1,7 @@
 from flask import jsonify
 
+from src.nutrition_facts import NutritionFactsLabel
 from src.proccess_fineli_data import run_fineli_workflow, run_fuzzy_matching_workflow
-
 
 def get_list_of_ingredients(nutrition_facts_label):
     '''Get list of ingredient names from a nutrition label.
@@ -56,12 +56,12 @@ def calculate_nutiritonal_values_for_servings(user_request, processed_fineli_res
     for original_element, fineli_element in zip(user_request, processed_fineli_response):
             energy = get_nutritional_value(original_element["weight"], fineli_element["energy"])
             fat = get_nutritional_value(original_element["weight"], fineli_element["fat"])
-            saturated_fat = get_nutritional_value(original_element["weight"], fineli_element["saturatedFat"])
+            saturated_fat = get_nutritional_value(original_element["weight"], fineli_element["saturated_fat"])
             carbohydrates = get_nutritional_value(original_element["weight"], fineli_element["carbohydrates"])
             sugars = get_nutritional_value(original_element["weight"], fineli_element["sugars"])
             protein = get_nutritional_value(original_element["weight"], fineli_element["protein"])
             salt = get_nutritional_value(original_element["weight"], fineli_element["salt"])
-            new_element = {"name": original_element["name"],
+            new_element : NutritionFactsLabel = {"name": original_element["name"],
                            "energy": energy,
                            "fat":  fat,
                            "saturated_fat": saturated_fat,
@@ -97,7 +97,7 @@ def sum_nutritional_values_for_all_ingredients(list_with_values_per_serving):
         total_protein += element["protein"]
         total_salt += element["salt"]
 
-    final_nutrition_facts_label = {"energy": round(total_energy, 2), 
+    final_nutrition_facts_label : NutritionFactsLabel = {"energy": round(total_energy, 2), 
                                    "fat": round(total_fat, 2), 
                                    "saturated_fat": round(total_saturated_fat, 2),
                                    "carbohydrates": round(total_carbohydrates, 2), 
