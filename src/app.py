@@ -1,16 +1,12 @@
-from flask import Flask, request
+import flask
+import functions_framework
 
-from src.process_user_request import get_list_of_ingredients, get_ingredients_facts_from_fineli, calculate_nutiritonal_values_for_servings, sum_nutritional_values_for_all_ingredients, create_full_response
+#from src.process_user_request import get_list_of_ingredients, get_ingredients_facts_from_fineli, calculate_nutiritonal_values_for_servings, sum_nutritional_values_for_all_ingredients, create_full_response
+from process_user_request import get_list_of_ingredients, get_ingredients_facts_from_fineli, calculate_nutiritonal_values_for_servings, sum_nutritional_values_for_all_ingredients, create_full_response
 
-app = Flask(__name__)
-
-@app.route("/")
-def welcome_message():
-    return "<p>Hello from RVAL.</p>"
-
-@app.post("/api/v1/nutritionfacts")
-def nutrition_facts_calculator():
-    request_body = request.json 
+@functions_framework.http
+def nutrition_facts_calculator(request: flask.Request) -> flask.typing.ResponseReturnValue:
+    request_body = flask.request.json 
     request_body = sorted(request_body, key=lambda d: d['name'])
 
     ingredients = get_list_of_ingredients(request_body)
