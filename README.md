@@ -22,18 +22,17 @@ This project is a part of my Master's thesis at Centria UAS.
 
 ## Running the application locally
 
-### With Flask 
+### With Functions Framework 
 ```sh
 pip install -r requirements.txt 
-flask --app src.app run
+functions-framework --target nutrition_facts_calculator --debug --source=src/app.py --host=127.0.0.1 --port=5000
 ```
 
-The application will take your POST requests at http://127.0.0.1:5000/api/v1/nutritionfacts.
-The application also provides a hello world message at http://127.0.0.1:5000.
+The application will take your POST requests at http://127.0.0.1:5000/.
 
 ## Example request body
 
-### POST api/v1/nutritionfacts
+### POST
 
 ```json
 [
