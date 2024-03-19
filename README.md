@@ -14,7 +14,7 @@ This project is a part of my Master's thesis at Centria UAS.
 
 ## Tech Stack 
 
-- Python (+ Flask, pytest, ruff)
+- Python (+ Functions Framework, pytest, ruff)
 - Docker
 - Terraform
 - AWS & GCP 
@@ -22,18 +22,36 @@ This project is a part of my Master's thesis at Centria UAS.
 
 ## Running the application locally
 
-### With Flask 
 ```sh
-pip install -r requirements.txt 
-flask --app src.app run
+pip install -r src/requirements.txt 
+functions-framework --target nutrition_facts_calculator --debug --source=src/app.py --host=127.0.0.1 --port=5000
 ```
 
-The application will take your POST requests at http://127.0.0.1:5000/api/v1/nutritionfacts.
-The application also provides a hello world message at http://127.0.0.1:5000.
+The application will take your POST requests at http://127.0.0.1:5000/.
+
+## Deploying to Google Cloud Functions
+
+1. Create Google Cloud Project 
+2. Authenticate with Google Cloud CLI
+3. Select your project: `gcloud config set project`
+4. Run deployment command:
+```sh
+gcloud functions deploy rval \
+--gen2 \
+--region=europe-north1 \ (you can substitute for another region)
+--runtime=python311 \
+--source=src \
+--entry-point=nutrition_facts_calculator \
+--allow-unauthenticated \
+--trigger-http
+```
+If the deployment is successful, you will see the function's URL in your console.
+NOTE: the function will be public.
+
 
 ## Example request body
 
-### POST api/v1/nutritionfacts
+### POST
 
 ```json
 [

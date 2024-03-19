@@ -1,8 +1,8 @@
 from copy import deepcopy
 from thefuzz import fuzz
 
-from src.call_fineli_api import get_data_from_fineli
-from src.nutrition_facts import NutritionFactsLabel
+from call_fineli_api import get_data_from_fineli
+from nutrition_facts import NutritionFactsLabel
 
 def get_list_of_nutrition_values(fineli_response: list) -> NutritionFactsLabel:
     '''Clean up Fineli response to get only the EU-law required information for nutrition declaration per item.
