@@ -1,7 +1,7 @@
 from flask import jsonify
 
-from src.nutrition_facts import NutritionFactsLabel
-from src.proccess_fineli_data import run_fineli_workflow, run_fuzzy_matching_workflow
+from nutrition_facts import NutritionFactsLabel
+from proccess_fineli_data import run_fineli_workflow, run_fuzzy_matching_workflow
 
 def get_list_of_ingredients(nutrition_facts_label: NutritionFactsLabel) -> list:
     '''Get list of ingredient names from a nutrition label.
