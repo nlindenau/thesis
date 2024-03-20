@@ -14,20 +14,36 @@ This project is a part of my Master's thesis at Centria UAS.
 
 ## Tech Stack 
 
-- Python (+ Functions Framework, pytest, ruff)
+- Python (+ pytest, ruff)
 - Docker
-- Terraform
+- SAM & Functions Framework
 - AWS & GCP 
 - GitHub Actions
 
+## Prerequisites 
+
+- Python, at least 3.9 and pip
+- gcloud CLI
+- SAM CLI 
+
 ## Running the application locally
 
+### With Functions Framework
 ```sh
 pip install -r src/requirements.txt 
 functions-framework --target nutrition_facts_calculator --debug --source=src/app.py --host=127.0.0.1 --port=5000
 ```
 
-The application will take your POST requests at http://127.0.0.1:5000/.
+The application will take your POST requests at http://127.0.0.1:5000/. 
+
+### With SAM
+```sh
+cd aws-sam
+sam build 
+sam local start-api --debug   
+```
+
+The application will take your POST requests at http://127.0.0.1:3000/.
 
 ## Deploying to Google Cloud Functions
 
@@ -46,7 +62,7 @@ gcloud functions deploy rval \
 --trigger-http
 ```
 If the deployment is successful, you will see the function's URL in your console.
-NOTE: the function will be public.
+NOTE: the function will be public. You can make it private by removing `--allow-unauthenticated` flag.
 
 
 ## Example request body
