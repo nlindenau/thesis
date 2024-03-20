@@ -1,5 +1,3 @@
-from flask import jsonify
-
 from nutrition_facts import NutritionFactsLabel
 from proccess_fineli_data import run_fineli_workflow, run_fuzzy_matching_workflow
 
@@ -114,6 +112,24 @@ def create_full_response(list_of_ingredients: list, fineli_response_names: list,
     response["fineli_returned_ingredients"] = fineli_response_names
     response["original_ingredients"] = list_of_ingredients
 
-    response_as_json = jsonify(response)
-    return(response_as_json)
+    return(response)
 
+def run_request_processing_workflow(request_body):
+    request_body = sorted(request_body, key=lambda d: d['name'])
+
+    ingredients = get_list_of_ingredients(request_body)
+    ingredients.sort()
+
+    fineli_list = get_ingredients_facts_from_fineli(ingredients)
+    fineli_list = sorted(fineli_list, key=lambda d: d['name'])
+
+    fineli_ingredients = get_list_of_ingredients(fineli_list)
+    fineli_ingredients.sort()
+
+    nutritional_values_for_servings = calculate_nutiritonal_values_for_servings(request_body, fineli_list)
+
+    final_label = sum_nutritional_values_for_all_ingredients(nutritional_values_for_servings)
+
+    response = create_full_response(ingredients, fineli_ingredients, final_label)
+
+    return response
