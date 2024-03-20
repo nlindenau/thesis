@@ -45,12 +45,13 @@ sam local start-api --debug
 
 The application will take your POST requests at http://127.0.0.1:3000/.
 
-## Deploying to Google Cloud Functions
+## Deploying the application to the cloud
 
-1. Create Google Cloud Project 
-2. Authenticate with Google Cloud CLI
-3. Select your project: `gcloud config set project`
-4. Run deployment command:
+### Google Cloud
+
+1. [Authenticate with Google Cloud CLI](https://cloud.google.com/docs/authentication/gcloud)
+2. Select your project: `gcloud config set project`
+3. Run deployment command:
 ```sh
 gcloud functions deploy rval \
 --gen2 \
@@ -64,6 +65,34 @@ gcloud functions deploy rval \
 If the deployment is successful, you will see the function's URL in your console.
 NOTE: the function will be public. You can make it private by removing `--allow-unauthenticated` flag.
 
+### AWS
+
+1. [Authenticate to AWS](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-authentication.html)
+2. Change directory to aws-sam
+```sh
+cd aws-sam
+```
+3. Build the application
+```sh
+sam build
+```
+4. Deploy the application (follow prompts on the command line)
+```sh
+sam deploy --region eu-north-1 --stack-name rval      
+```
+
+If the deployment is successful, you will see the API Gateway's Stage and Prod URL in your console.
+NOTE: the function will be public.
+
+## Deleting cloud deployment
+
+### Google Cloud
+
+1. Run `gcloud functions delete rval --region europe-north1 `
+
+### AWS
+
+1. Run `sam delete rval`
 
 ## Example request body
 
