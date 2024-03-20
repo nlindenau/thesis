@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  rval
+
+  SAM Template for rval
+
+Globals:
+  Function:
+    Timeout: 120
+    MemorySize: 500
+    LoggingConfig:
+      LogFormat: JSON
+
+Resources:
+  RvalFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./../src/
+      Handler: main.lambda_handler
+      Runtime: python3.11
+      Events:
+        RvalApi:
+          Type: Api
+          Properties:
+            Path: /
+            Method: post
+
+Outputs:
+  ApiProdUrl:
+    Description: "Url to prod stage of the deployed API Gateway"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  ApiStageUrl:
+    Description: "Url to prod stage of the deployed API Gateway"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Stage/"
